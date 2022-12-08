@@ -5,11 +5,11 @@ import Inicio from "./Inicio";
 export default function App() {
   return (
     <BrowserRouter>
-      <Topo/>
-      <Routes>
-        <Route path="/" element={Inicio}/>
-      </Routes>
-    </BrowserRouter>
+    <Topo/>
+    <Routes>
+      <Route path="/" element={<Inicio/>}/>
+    </Routes>
+  </BrowserRouter>
   );
 }
 

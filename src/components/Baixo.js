@@ -9,7 +9,8 @@ export default function Baixo(props){
             <img src={foto? foto : imagem}/>
             <div>
                 <p>{filme? filme : titulo}</p>
-                <p>{dia && dia} - {hora && hora}</p>
+                {dia && 
+                <p>{dia && dia} - {hora && hora}</p>}
             </div>
         </BarraBaixo>
     )

@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link, useParams } from "react-router-dom";
-import Baixo from "../components/Baixo";
+import Baixo from "../components/BaixoAssento";
 
 
 export default function Assentos(){
@@ -42,7 +42,10 @@ export default function Assentos(){
                     </Tipo>)}
                 </Tipos>
             </EscolhaCadeiras>
-            <Baixo />
+            <Baixo>
+                <img src={cadeira.movie.posterURL}/>
+                <p>{cadeira.days.weekday}</p>
+            </Baixo>
         </>
     )
 }

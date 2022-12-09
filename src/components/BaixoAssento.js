@@ -2,12 +2,11 @@ import styled from "styled-components"
 
 export default function Baixo(props){
 
-    const {imagem, titulo} = props
+    //const {imagem, titulo} = props
 
     return(
         <BarraBaixo>
-            <img src={imagem}/>
-            <p>{titulo}</p>
+            {props.children}
         </BarraBaixo>
     )
 }

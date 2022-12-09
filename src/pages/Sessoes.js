@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link, useParams } from "react-router-dom";
-import Baixo from "../components/Baixo";
+import Baixo from "../components/BaixoSessao";
 
 
 export default function Sessoes(){
@@ -44,7 +44,10 @@ export default function Sessoes(){
             )
             )}
         </Horarios>
-        <Baixo imagem={programa.posterURL} titulo={programa.title}/>
+        <Baixo>
+            <img src={programa.posterURL}/>
+            <p>{programa.title}</p>
+        </Baixo>
         </>
     )
 }

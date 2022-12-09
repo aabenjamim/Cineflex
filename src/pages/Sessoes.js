@@ -35,7 +35,9 @@ export default function Sessoes(){
                     <AlinharBotoes>
                         {(ds.showtimes)?.map((h)=>
                         (
-                            <Botao>{h.name}</Botao>
+                            <Link to={`/assentos/${h.id}`} key={h.id}>
+                                <button>{h.name}</button>
+                            </Link>
                         ))}
                     </AlinharBotoes>
                 </Dia>
@@ -75,17 +77,17 @@ const Dia = styled.div`
         display: flex;
         align-items: center;
     }
-`
-const Botao = styled.button`
-    width: 82px;
-    height: 43px;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 21px;
-    border-radius: 3px;
-    background-color: #E8833A;
-    border: none;
-    color: #FFFFFF;
+    button{
+        width: 82px;
+        height: 43px;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21px;
+        border-radius: 3px;
+        background-color: #E8833A;
+        border: none;
+        color: #FFFFFF;
+    }
 `
 const AlinharBotoes = styled.div`
     display: flex;

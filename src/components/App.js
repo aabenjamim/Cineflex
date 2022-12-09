@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Topo from "./Topo";
 import Inicio from "../pages/Inicio";
 import Sessoes from "../pages/Sessoes";
-import { useState } from "react";
+import Assentos from "../pages/Assentos";
 
 export default function App() {
 
@@ -12,6 +12,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Inicio/>}/>
       <Route path="/sessoes/:idFilme" element={<Sessoes/>}/>
+      <Route path="/assentos/:idSessao" element={<Assentos/>}/>
     </Routes>
   </BrowserRouter>
   );

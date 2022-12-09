@@ -15,7 +15,7 @@ export default function Assentos(){
     {status:'Disponível', cor:'#C3CFD9', borda:'#7B8B99'},
     {status:'Indisponível', cor:'#FBE192', borda: '#F7C52B'}]
 
-    console.log(cadeira)
+    console.log(cadeira.movie.title)
 
     useEffect(()=>{
         const URL = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
@@ -25,8 +25,12 @@ export default function Assentos(){
         promise.catch((erro)=>(console.log(erro.response.data)))
     }, [])
 
+    if(cadeira===[]){
+        <div>Carregando...</div>
+    }
+
     return(
-        <>
+        <Alinhamento>
             <EscolhaCadeiras>
                 <h1>Selecione o(s) assento(s)</h1>
                 <Cadeiras>
@@ -42,11 +46,22 @@ export default function Assentos(){
                     </Tipo>)}
                 </Tipos>
             </EscolhaCadeiras>
+            <Formulario>
+                <p>Nome do comprador:</p>
+                <input type='text' placeholder="Digite seu nome..." required/>
+                <p>CPF do comprador:</p>
+                <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+			    placeholder="Digite seu CPF..." required/>
+            </Formulario>
+            <Selecionar>
+                Reservar assento(s)
+            </Selecionar>
             <Baixo>
                 <img src={cadeira.movie.posterURL}/>
-                <p>{cadeira.days.weekday}</p>
+                <p>{cadeira.movie.title}</p>
+                <p>{cadeira.day.weekday} - {cadeira.name}</p>
             </Baixo>
-        </>
+        </Alinhamento>
     )
 }
 
@@ -108,4 +123,56 @@ const Botao = styled.button`
     background-color:${props => props.cor};
     margin-bottom: 10px;
     border-color: ${props => props.borda};
+`
+
+const Formulario = styled.form`
+    padding: 25px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: left;
+    color: #293845;
+    gap: 8px;
+    margin-bottom: 57px;
+    input{
+        width: 327px;
+        height: 51px;
+        border: 1px solid #D5D5D5;
+        ::placeholder{
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 21px;
+            display: flex;
+            align-items: center;
+            color: #AFAFAF;
+            padding: 18px;
+        }
+    }
+
+`
+const Selecionar = styled.button`
+    width: 225px;
+    height: 42px;
+    border-radius: 3px;
+    background-color: #E8833A;
+    border: none;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+`
+const Alinhamento = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `

@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link, useParams } from "react-router-dom";
-import Baixo from "../components/BaixoAssento";
+import Baixo from "../components/Baixo";
 
 
 export default function Assentos(){
@@ -14,8 +14,6 @@ export default function Assentos(){
     const lista = [{status:'Selecionado', cor:'#1AAE9E', borda: '#0E7D71'}, 
     {status:'Disponível', cor:'#C3CFD9', borda:'#7B8B99'},
     {status:'Indisponível', cor:'#FBE192', borda: '#F7C52B'}]
-
-    console.log(cadeira.movie.title)
 
     useEffect(()=>{
         const URL = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
@@ -56,11 +54,10 @@ export default function Assentos(){
             <Selecionar>
                 Reservar assento(s)
             </Selecionar>
-            <Baixo>
-                <img src={cadeira.movie.posterURL}/>
-                <p>{cadeira.movie.title}</p>
-                <p>{cadeira.day.weekday} - {cadeira.name}</p>
-            </Baixo>
+            <Baixo foto={cadeira.movie && cadeira.movie.posterURL}
+            filme={cadeira.movie &&  cadeira.movie.title}
+            dia={cadeira.day && cadeira.day.weekday}
+            hora={cadeira.name && cadeira.name}/>
         </Alinhamento>
     )
 }

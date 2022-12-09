@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
+import { Link, useParams } from "react-router-dom";
 
 export default function Inicio(){
 
@@ -12,13 +13,17 @@ export default function Inicio(){
         promise.then((filme)=>setFilme(filme.data))
         promise.catch((erro)=>(console.log(erro)))
     }, [])
+
+    const {idFilme} = useParams()
     
     return(
         <FilmesEmCartaz>
             <h1>Selecione o filme</h1>
             <Filme>
                 {filme.map((filmes)=>
-                <img src={filmes.posterURL}/>
+                <Link to={`/sessoes/${filmes.id}`} key={filmes.id}>
+                    <img src={filmes.posterURL}/>
+                </Link>
                 )}
             </Filme>
         </FilmesEmCartaz>

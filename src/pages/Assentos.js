@@ -8,12 +8,11 @@ import Carregando from "../components/Carregando";
 
 export default function Assentos(props){
 
-    const {nome, setNome, cpf, setCpf} = props
+    const {nome, setNome, cpf, setCpf, numAssentos, setNumAssentos, cadeira, setCadeira,
+    escolhidos, setEscolhidos} = props
 
     const {idSessao} = useParams()
 
-    const [cadeira, setCadeira] = useState([])
-    const [escolhidos, setEscolhidos] = useState([])
     const navigate = useNavigate()
     
 
@@ -40,6 +39,7 @@ export default function Assentos(props){
         if(!escolhidos.includes(c.id)){
             if(c.isAvailable === true){
                 setEscolhidos([...escolhidos, c.id])
+                setNumAssentos([...numAssentos, c.name])
             }
             if(c.isAvailable === false){
                 alert('Esse assento não está disponível')
@@ -47,28 +47,34 @@ export default function Assentos(props){
             }
         }
         if(escolhidos.includes(c.id)){
-            console.log('velho', escolhidos)
             const remover = escolhidos.indexOf(c.id)
             const novaLista = [...escolhidos]
-            novaLista.splice(remover)
+            const novosAssentos = [...numAssentos]
+            novosAssentos.splice(remover, 1)
+            novaLista.splice(remover, 1)
             setEscolhidos([...novaLista])
+            setNumAssentos([...novosAssentos])
         }
     }
 
     function reservarAssentos (event) {
 		event.preventDefault();
 
-        const url = 'https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many'
-		const requisicao = axios.post(url , {
-            ids: escolhidos,
-            name: nome,
-            cpf: cpf
-		});
-
-        requisicao.then(() => navigate("/sucesso")) 
+        if(escolhidos.length>0){
+            const url = 'https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many'
+            const requisicao = axios.post(url , {
+                ids: escolhidos,
+                name: nome,
+                cpf: cpf
+            });
+    
+            requisicao.then(() => navigate("/sucesso")) 
+        }
+        if(escolhidos.length===0){
+            alert('você não escolheu o assento!')
+        }
     }
 
-    console.log('FORA', escolhidos)
     return(
         <Alinhamento>
             <EscolhaCadeiras>

@@ -31,6 +31,9 @@ font-weight: 400;
 border-top: 1px solid #9EADBA;
 box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
 gap: 14px;
+position: fixed;
+bottom: 0;
+left: 0;
 img{
     width: 48px;
     height: 72px;

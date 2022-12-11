@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Link, useParams } from "react-router-dom";
 import Baixo from "../components/Baixo";
+import Carregando from "../components/Carregando";
 
 
 export default function Sessoes(){
@@ -20,7 +21,9 @@ export default function Sessoes(){
     }, [])
 
     if(programa===[]){
-        <div>Carregando...</div>
+        return(
+            <Carregando/>
+        )
     }
 
     return(

@@ -1,15 +1,21 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import Baixo from "../components/Baixo";
+import Carregando from "../components/Carregando";
 
 
-export default function Assentos(){
+export default function Assentos(props){
+
+    const {nome, setNome, cpf, setCpf} = props
 
     const {idSessao} = useParams()
 
     const [cadeira, setCadeira] = useState([])
+    const [escolhidos, setEscolhidos] = useState([])
+    const navigate = useNavigate()
+    
 
     const lista = [{status:'Selecionado', cor:'#1AAE9E', borda: '#0E7D71'}, 
     {status:'Disponível', cor:'#C3CFD9', borda:'#7B8B99'},
@@ -24,36 +30,68 @@ export default function Assentos(){
     }, [])
 
     if(cadeira===[]){
-        <div>Carregando...</div>
+        return(
+            <Carregando/>
+        )
     }
 
+
+    function escolher(c){
+        if(c.isAvailable === true){
+            setEscolhidos([...escolhidos, c.id])
+        }
+        if(c.isAvailable === false){
+            alert('Esse assento não está disponível')
+            return
+        }
+    }
+
+    function reservarAssentos (event) {
+		event.preventDefault();
+
+        const url = 'https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many'
+		const requisicao = axios.post(url , {
+            ids: escolhidos,
+            name: nome,
+            cpf: cpf
+		});
+
+        requisicao.then(() => navigate("/sucesso")) 
+    }
+
+    console.log('FORA', escolhidos)
     return(
         <Alinhamento>
             <EscolhaCadeiras>
                 <h1>Selecione o(s) assento(s)</h1>
                 <Cadeiras>
                     {(cadeira.seats)?.map((c)=>
-                        <button>{c.name}</button>
+                        <Botao onClick={()=>escolher(c)}
+                        cor={c.isAvailable?  (escolhidos.includes(c.id)? 
+                        '#1AAE9E' : '#C3CFD9') : '#FBE192'}
+                        >{c.name}</Botao>
                     )}
                 </Cadeiras>
                 <Tipos>
                     {lista.map((nomes)=>
                     <Tipo>
-                        <Botao cor={nomes.cor} borda={nomes.borda}/>
+                        <BotaoExemplo cor={nomes.cor} borda={nomes.borda}/>
                         <p>{nomes.status}</p>
                     </Tipo>)}
                 </Tipos>
             </EscolhaCadeiras>
-            <Formulario>
+            <Formulario onSubmit={reservarAssentos}>
                 <p>Nome do comprador:</p>
-                <input type='text' placeholder="Digite seu nome..." required/>
+                <Input type='text' placeholder="Digite seu nome..." value={nome} 
+                onChange={e => setNome(e.target.value)} required/>
                 <p>CPF do comprador:</p>
-                <input type="text" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
-			    placeholder="Digite seu CPF..." required/>
+                <Input type="number" name="cpf" value={cpf} placeholder="Digite seu CPF..." 
+                onChange={e => setCpf(e.target.value)} required/>
+                
+                <Selecionar type="submit">
+                    Reservar assento(s)
+                </Selecionar>
             </Formulario>
-            <Selecionar>
-                Reservar assento(s)
-            </Selecionar>
             <Baixo foto={cadeira.movie && cadeira.movie.posterURL}
             filme={cadeira.movie &&  cadeira.movie.title}
             dia={cadeira.day && cadeira.day.weekday}
@@ -85,15 +123,20 @@ const Cadeiras = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     gap: 7px;
-   button{
-        height: 25px;
-        width: 26px;
-        border-radius: 12px;
-        border: 1px solid #808F9D;
-        background-color: #C3CFD9;
-        margin-bottom: 10px;
-    }
+
 `
+const Botao = styled.button`
+    height: 25px;
+    width: 26px;
+    border-radius: 12px;
+    border: 1px solid #808F9D;
+    background-color: ${props => props.cor};
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
 const Tipo = styled.div`
     display: flex;
     flex-direction: column;
@@ -112,7 +155,7 @@ const Tipos = styled.div`
     justify-content: space-between;
     gap: 50px;
 `
-const Botao = styled.button`
+const BotaoExemplo = styled.button`
     height: 25px;
     width: 26px;
     border-radius: 12px;
@@ -123,37 +166,43 @@ const Botao = styled.button`
 `
 
 const Formulario = styled.form`
-    padding: 25px;
-    height: 160px;
+    margin-top: 27px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-family: 'Roboto';
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 21px;
-    text-align: left;
-    color: #293845;
-    gap: 8px;
-    margin-bottom: 57px;
     input{
+        box-sizing: border-box;
         width: 327px;
         height: 51px;
         border: 1px solid #D5D5D5;
-        ::placeholder{
-            font-family: 'Roboto';
-            font-style: italic;
-            font-weight: 400;
-            font-size: 18px;
-            line-height: 21px;
-            display: flex;
-            align-items: center;
-            color: #AFAFAF;
-            padding: 18px;
-        }
+        display: flex;
+        justify-content: start;
+        padding: 15px;
+        font-size: 18px;
+        font-family: 'Roboto';
     }
 
+    input::placeholder{
+        color: #AFAFAF;
+        font-size: 18px;
+        font-style: italic;
+    }
+
+    p{
+        color: #293845;
+        font-family: 'Roboto';
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: start;
+    }
 `
+const Input = styled.input`
+
+`
+
 const Selecionar = styled.button`
     width: 225px;
     height: 42px;
@@ -166,7 +215,9 @@ const Selecionar = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 147px;
+    margin-top: 57px;
+    margin-left: 15%;
 `
 const Alinhamento = styled.div`
     display: flex;

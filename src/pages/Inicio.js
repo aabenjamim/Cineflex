@@ -19,7 +19,7 @@ export default function Inicio(){
             <h1>Selecione o filme</h1>
             <Filme>
                 {filme.map((filmes)=>
-                <Link to={`/sessoes/${filmes.id}`} key={filmes.id}>
+                <Link to={`/sessoes/${filmes.id}`} key={filmes.id}  data-test="movie">
                     <img src={filmes.posterURL}/>
                 </Link>
                 )}

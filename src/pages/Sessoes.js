@@ -32,13 +32,13 @@ export default function Sessoes(){
             <h1>Selecione o horário</h1>
             {(programa.days)?.map((ds)=>
             (
-                <Dia key={ds.id}>
+                <Dia key={ds.id} data-test="movie-day">
                     <p>{ds.weekday} - {ds.date}</p>
 
                     <AlinharBotoes>
                         {(ds.showtimes)?.map((h)=>
                         (
-                            <Link to={`/assentos/${h.id}`} key={h.id}>
+                            <Link to={`/assentos/${h.id}`} key={h.id} data-test="showtime">
                                 <button>{h.name}</button>
                             </Link>
                         ))}

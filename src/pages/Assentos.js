@@ -84,6 +84,7 @@ export default function Assentos(props){
                         <Botao onClick={()=>escolher(c)}
                         cor={c.isAvailable?  (escolhidos.includes(c.id)? 
                         '#1AAE9E' : '#C3CFD9') : '#FBE192'}
+                        data-test="seat"
                         >{c.name}</Botao>
                     )}
                 </Cadeiras>
@@ -98,12 +99,14 @@ export default function Assentos(props){
             <Formulario onSubmit={reservarAssentos}>
                 <p>Nome do comprador:</p>
                 <Input type='text' placeholder="Digite seu nome..." value={nome} 
+                data-test="client-name"
                 onChange={e => setNome(e.target.value)} required/>
                 <p>CPF do comprador:</p>
                 <Input type="number" name="cpf" value={cpf} placeholder="Digite seu CPF..." 
+                data-test="client-cpf"
                 onChange={e => setCpf(e.target.value)} required/>
                 
-                <Selecionar type="submit">
+                <Selecionar type="submit" data-test="book-seat-btn">
                     Reservar assento(s)
                 </Selecionar>
             </Formulario>

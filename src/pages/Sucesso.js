@@ -22,17 +22,17 @@ export default function Sucesso(props){
             <div>
                 <h1>Pedido feito com sucesso!</h1>
             </div>
-            <div>
+            <div data-test="movie-info">
                 <h2>Filme e sessão</h2>
                 <p>{cadeira.movie && cadeira.movie.title}</p>
                 <p>{cadeira.day && cadeira.day.date}  { cadeira.name && cadeira.name}</p>
             </div>
-            <div>
+            <div data-test="seats-info">
                 <h2>Ingressos</h2>
-                    {numAssentos.map((n) => 
-                    <p>Assento {n}</p>)}
+                {numAssentos.map((n) => 
+                <p>Assento {n}</p>)}
             </div>   
-            <div>
+            <div data-test="client-info">
                 <h2>Comprador</h2>
                 <p>Nome: {nome}</p>
                 <p>CPF: {cpf && cpf[0]}{cpf && cpf[1]}{cpf && cpf[2]}.
@@ -41,7 +41,7 @@ export default function Sucesso(props){
                 {cpf && cpf[9]}{cpf && cpf[10]}</p>
             </div>
             <Centro>
-                <Home onClick={voltar}>Voltar pra Home</Home>
+                <Home onClick={voltar} data-test="go-home-btn">Voltar pra Home</Home>
             </Centro>
         </Parabens>
     )

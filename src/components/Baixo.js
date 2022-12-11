@@ -5,7 +5,7 @@ export default function Baixo(props){
     const {imagem, titulo, filme, foto, hora, dia} = props
 
     return(
-        <BarraBaixo>
+        <BarraBaixo data-test="footer">
             <img src={foto? foto : imagem}/>
             <div>
                 <p>{filme? filme : titulo}</p>

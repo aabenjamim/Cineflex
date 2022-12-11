@@ -37,12 +37,21 @@ export default function Assentos(props){
 
 
     function escolher(c){
-        if(c.isAvailable === true){
-            setEscolhidos([...escolhidos, c.id])
+        if(!escolhidos.includes(c.id)){
+            if(c.isAvailable === true){
+                setEscolhidos([...escolhidos, c.id])
+            }
+            if(c.isAvailable === false){
+                alert('Esse assento não está disponível')
+                return
+            }
         }
-        if(c.isAvailable === false){
-            alert('Esse assento não está disponível')
-            return
+        if(escolhidos.includes(c.id)){
+            console.log('velho', escolhidos)
+            const remover = escolhidos.indexOf(c.id)
+            const novaLista = [...escolhidos]
+            novaLista.splice(remover)
+            setEscolhidos([...novaLista])
         }
     }
 

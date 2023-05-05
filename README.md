@@ -13,11 +13,10 @@ Este é um projeto chamado Cineflex, uma aplicação web que permite aos usuári
 
 A aplicação Cineflex oferece as seguintes funcionalidades:
 
-- Visualização de filmes em cartaz, com informações como título, sinopse e imagem de capa.
-- Exibição de detalhes do filme selecionado, incluindo elenco, diretor e gênero.
+- Visualização de filmes em cartaz, com informações como título e imagem de capa.
 - Listagem de sessões de cinema disponíveis para o filme escolhido.
 - Agendamento de assentos para uma sessão específica.
-- Exibição de um resumo dos assentos selecionados antes da finalização do agendamento.
+- Exibição de um resumo dos assentos, filme, comprador, dia e horário selecionados ao finalizar o agendamento.
 
 ## Como executar o projeto
 
